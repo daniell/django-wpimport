@@ -4,6 +4,9 @@ from datetime import datetime
 from BeautifulSoup import BeautifulStoneSoup
 
 
+NON_INTEGER_TAG_STRINGS = ["trash", "post-trashed"]
+
+
 class BaseWordpressImporter(object):
 
     default_mapping = [
@@ -73,12 +76,12 @@ class BaseWordpressImporter(object):
         return int(tag.string)
 
     def convert_bool(self, tag):
-        if tag.string == 'trash':
+        if tag.string in NON_INTEGER_TAG_STRINGS:
             print tag
         return bool(int(tag.string))
 
     def convert_approved(self, tag):
-        if tag.string == 'trash':
+        if tag.string in NON_INTEGER_TAG_STRINGS:
             return tag.string
         return bool(int(tag.string))
 
